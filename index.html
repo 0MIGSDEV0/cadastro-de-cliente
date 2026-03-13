@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- Página de Cadastro -->
     <div class="container">
         <h1>Cadastro de Cliente</h1>
-        <form action="#" method="POST">
+        <form id="cadastroForm">
             <label for="nome">Nome Completo:</label>
             <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
 
@@ -28,5 +30,69 @@
             <button type="submit">Cadastrar</button>
         </form>
     </div>
+
+    <script>
+        // Quando o formulário for enviado
+        document.getElementById('cadastroForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Impede o envio tradicional do formulário
+
+            // Coleta os dados dos campos
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const telefone = document.getElementById('telefone').value;
+            const endereco = document.getElementById('endereco').value;
+            const dataNascimento = document.getElementById('data-nascimento').value;
+
+            // Armazena as informações no localStorage
+            localStorage.setItem('nome', nome);
+            localStorage.setItem('email', email);
+            localStorage.setItem('telefone', telefone);
+            localStorage.setItem('endereco', endereco);
+            localStorage.setItem('data-nascimento', dataNascimento);
+
+            // Redireciona para a página de exibição
+            window.location.href = 'pagina2.html';
+        });
+    </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informações Cadastradas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="info-container">
+        <h1>Informações Cadastradas</h1>
+        <p><strong>Nome:</strong> <span id="mostrarNome"></span></p>
+        <p><strong>E-mail:</strong> <span id="mostrarEmail"></span></p>
+        <p><strong>Telefone:</strong> <span id="mostrarTelefone"></span></p>
+        <p><strong>Endereço:</strong> <span id="mostrarEndereco"></span></p>
+        <p><strong>Data de Nascimento:</strong> <span id="mostrarDataNascimento"></span></p>
+
+        <a href="index.html">Voltar ao Cadastro</a>
+    </div>
+
+    <script>
+        // Recupera as informações do localStorage
+        const nome = localStorage.getItem('nome');
+        const email = localStorage.getItem('email');
+        const telefone = localStorage.getItem('telefone');
+        const endereco = localStorage.getItem('endereco');
+        const dataNascimento = localStorage.getItem('data-nascimento');
+
+        // Exibe as informações na página
+        document.getElementById('mostrarNome').textContent = nome;
+        document.getElementById('mostrarEmail').textContent = email;
+        document.getElementById('mostrarTelefone').textContent = telefone;
+        document.getElementById('mostrarEndereco').textContent = endereco;
+        document.getElementById('mostrarDataNascimento').textContent = dataNascimento;
+    </script>
+
 </body>
 </html>
