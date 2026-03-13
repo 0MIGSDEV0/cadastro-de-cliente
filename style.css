@@ -8,7 +8,8 @@
 /* Estilos gerais */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #1e1e1e; /* Fundo escuro */
+    color: #fff; /* Texto branco */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,19 +19,20 @@ body {
 
 /* Container do formulário */
 .container {
-    background-color: white;
+    background-color: #2b2b2b;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     width: 300px;
     text-align: center;
+    border: 2px solid #9b4dca; /* Borda roxa neon */
 }
 
-/* Estilos do título */
+/* Título */
 h1 {
     font-size: 24px;
     margin-bottom: 20px;
-    color: #333;
+    color: #9b4dca; /* Texto roxo neon */
 }
 
 /* Estilos dos inputs e labels */
@@ -39,7 +41,7 @@ label {
     margin-bottom: 5px;
     text-align: left;
     display: block;
-    color: #555;
+    color: #ccc;
 }
 
 input[type="text"],
@@ -49,8 +51,10 @@ input[type="date"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border: 2px solid #9b4dca; /* Borda roxa neon */
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
     font-size: 14px;
 }
 
@@ -58,22 +62,48 @@ input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="tel"]:focus,
 input[type="date"]:focus {
-    border-color: #4caf50;
+    border-color: #f09; /* Foco com roxo neon */
     outline: none;
 }
 
 /* Estilo do botão */
 button {
-    background-color: #4caf50;
+    background-color: #9b4dca; /* Botão roxo neon */
     color: white;
     padding: 12px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     width: 100%;
     font-size: 16px;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #f09; /* Hover do botão com roxo neon mais forte */
+}
+
+/* Estilo da página de exibição */
+.info-container {
+    background-color: #2b2b2b;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 300px;
+    text-align: center;
+    border: 2px solid #9b4dca;
+}
+
+.info-container p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+a {
+    color: #9b4dca;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+a:hover {
+    text-decoration: underline;
 }
