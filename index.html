@@ -25,6 +25,7 @@
         }
 
         .container {
+            position: relative;
             background-color: rgba(30, 0, 50, 0.9);
             padding: 30px;
             border-radius: 12px;
@@ -33,6 +34,7 @@
             text-align: center;
             border: 2px solid #9b4dca;
             box-shadow: 0 0 25px #9b4dca, 0 0 50px #d27fff;
+            margin-bottom: 20px;
         }
 
         h1 {
@@ -82,6 +84,7 @@
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 0 15px rgba(210,127,255,0.6);
+            margin-top: 10px;
         }
 
         button:hover {
@@ -90,6 +93,7 @@
         }
 
         .confirmacao {
+            position: relative;
             background: rgba(50,0,70,0.92);
             border: 2px solid #9b4dca;
             box-shadow: 0 0 30px #9b4dca;
@@ -99,12 +103,25 @@
             max-width: 380px;
             margin-bottom: 30px;
             text-align: center;
+            display: none;
         }
 
         .mensagem-sucesso {
             font-size: 18px;
             margin: 20px 0;
             color: #d0aaff;
+        }
+
+        #listaClientes {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 2px solid #84c4fc;
+            border-radius: 8px;
+            background-color: rgba(30,0,50,0.85);
         }
 
         @keyframes pisca {
@@ -129,7 +146,7 @@
 </head>
 <body>
 
-    <div class="confirmacao" id="confirmacao" style="display: none;">
+    <div class="confirmacao" id="confirmacao">
         <h1>Cadastro Realizado!</h1>
         <p class="mensagem-sucesso">As informações foram salvas com segurança.</p>
         <p style="color: #aaa; font-size: 14px; margin-top: 20px;">
@@ -161,14 +178,24 @@
 
             <button type="submit">Cadastrar com Sigilo</button>
         </form>
+
+        <button type="button" id="mostrarClientes" style="background: linear-gradient(135deg, #4d9bd2, #84c4fc); box-shadow: 0 0 15px rgba(132,196,252,0.6);">
+            Mostrar todos os clientes
+        </button>
+
+        <div id="listaClientes">
+            <!-- Lista de clientes aparecerá aqui -->
+        </div>
     </div>
 
     <script>
         const form = document.getElementById('cadastroForm');
         const confirmacao = document.getElementById('confirmacao');
         const voltarCadastro = document.getElementById('voltarCadastro');
+        const mostrarClientesBtn = document.getElementById('mostrarClientes');
+        const listaClientesDiv = document.getElementById('listaClientes');
 
-        // Função para salvar cliente (sem exibir lista)
+        // Função para salvar cliente no localStorage
         function salvarCliente(cliente) {
             let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
             clientes.push(cliente);
@@ -201,6 +228,34 @@
             confirmacao.style.display = 'none';
             form.style.display = 'block';
             form.reset();
+        });
+
+        // Mostrar todos os clientes
+        mostrarClientesBtn.addEventListener('click', function() {
+            const clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+
+            if (clientes.length === 0) {
+                listaClientesDiv.innerHTML = '<p style="color: #d27fff;">Nenhum cliente cadastrado ainda.</p>';
+            } else {
+                listaClientesDiv.innerHTML = '';
+                clientes.forEach((cliente, index) => {
+                    const clienteInfo = document.createElement('div');
+                    clienteInfo.style.borderBottom = '1px solid #d27fff';
+                    clienteInfo.style.padding = '8px 0';
+                    clienteInfo.innerHTML = `
+                        <strong>#${index + 1} - ${cliente.nome}</strong><br>
+                        E-mail: ${cliente.email}<br>
+                        Telefone: ${cliente.telefone}<br>
+                        Endereço: ${cliente.endereco}<br>
+                        Data de Nascimento: ${cliente.dataNascimento}<br>
+                        Cadastrado em: ${new Date(cliente.cadastradoEm).toLocaleString()}
+                    `;
+                    listaClientesDiv.appendChild(clienteInfo);
+                });
+            }
+
+            // Mostra ou oculta a lista
+            listaClientesDiv.style.display = listaClientesDiv.style.display === 'none' ? 'block' : 'none';
         });
     </script>
 
