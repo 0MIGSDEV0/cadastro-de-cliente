@@ -3,96 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Cliente</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Cadastro de Clientes</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- Página de Cadastro -->
+    <!-- Formulário de cadastro -->
     <div class="container">
         <h1>Cadastro de Cliente</h1>
         <form id="cadastroForm">
             <label for="nome">Nome Completo:</label>
-            <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
+            <input type="text" id="nome" placeholder="Digite seu nome" required>
 
             <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+            <input type="email" id="email" placeholder="Digite seu e-mail" required>
 
             <label for="telefone">Telefone:</label>
-            <input type="tel" id="telefone" name="telefone" placeholder="Digite seu telefone" required>
+            <input type="tel" id="telefone" placeholder="Digite seu telefone" required>
 
             <label for="endereco">Endereço:</label>
-            <input type="text" id="endereco" name="endereco" placeholder="Digite seu endereço" required>
+            <input type="text" id="endereco" placeholder="Digite seu endereço" required>
 
-            <label for="data-nascimento">Data de Nascimento:</label>
-            <input type="date" id="data-nascimento" name="data-nascimento" required>
+            <label for="dataNascimento">Data de Nascimento:</label>
+            <input type="date" id="dataNascimento" required>
 
             <button type="submit">Cadastrar</button>
         </form>
     </div>
 
-    <script>
-        // Quando o formulário for enviado
-        document.getElementById('cadastroForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Impede o envio tradicional do formulário
-
-            // Coleta os dados dos campos
-            const nome = document.getElementById('nome').value;
-            const email = document.getElementById('email').value;
-            const telefone = document.getElementById('telefone').value;
-            const endereco = document.getElementById('endereco').value;
-            const dataNascimento = document.getElementById('data-nascimento').value;
-
-            // Armazena as informações no localStorage
-            localStorage.setItem('nome', nome);
-            localStorage.setItem('email', email);
-            localStorage.setItem('telefone', telefone);
-            localStorage.setItem('endereco', endereco);
-            localStorage.setItem('data-nascimento', dataNascimento);
-
-            // Redireciona para a página de exibição
-            window.location.href = 'pagina2.html';
-        });
-    </script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informações Cadastradas</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <div class="info-container">
-        <h1>Informações Cadastradas</h1>
-        <p><strong>Nome:</strong> <span id="mostrarNome"></span></p>
-        <p><strong>E-mail:</strong> <span id="mostrarEmail"></span></p>
-        <p><strong>Telefone:</strong> <span id="mostrarTelefone"></span></p>
-        <p><strong>Endereço:</strong> <span id="mostrarEndereco"></span></p>
-        <p><strong>Data de Nascimento:</strong> <span id="mostrarDataNascimento"></span></p>
-
-        <a href="index.html">Voltar ao Cadastro</a>
+    <!-- Confirmação -->
+    <div class="confirmacao" id="confirmacao" style="display:none;">
+        <h1>Cadastro Concluído!</h1>
+        <p>Seu cadastro foi realizado com sucesso.</p>
+        <a href="#" id="voltarCadastro">Voltar ao Cadastro</a>
     </div>
 
-    <script>
-        // Recupera as informações do localStorage
-        const nome = localStorage.getItem('nome');
-        const email = localStorage.getItem('email');
-        const telefone = localStorage.getItem('telefone');
-        const endereco = localStorage.getItem('endereco');
-        const dataNascimento = localStorage.getItem('data-nascimento');
+    <!-- Lista de clientes -->
+    <div class="container">
+        <h1>Clientes Cadastrados</h1>
+        <div id="clientesList"></div>
+    </div>
 
-        // Exibe as informações na página
-        document.getElementById('mostrarNome').textContent = nome;
-        document.getElementById('mostrarEmail').textContent = email;
-        document.getElementById('mostrarTelefone').textContent = telefone;
-        document.getElementById('mostrarEndereco').textContent = endereco;
-        document.getElementById('mostrarDataNascimento').textContent = dataNascimento;
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
