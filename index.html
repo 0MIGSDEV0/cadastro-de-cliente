@@ -4,9 +4,169 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Clientes</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Fundo com estrelas roxas */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0a001f;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            overflow-x: hidden;
+            background-image: radial-gradient(#9b4dca 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Container principal */
+        .container {
+            background-color: rgba(30, 0, 50, 0.9);
+            padding: 25px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 360px;
+            text-align: center;
+            border: 2px solid #9b4dca;
+            box-shadow: 0 0 20px #9b4dca, 0 0 40px #d27fff;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 26px;
+            color: #d27fff;
+            text-shadow: 0 0 5px #d27fff, 0 0 15px #9b4dca;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 2px solid #9b4dca;
+            border-radius: 6px;
+            background-color: #2b0033;
+            color: #fff;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            border-color: #d27fff;
+            box-shadow: 0 0 10px #d27fff, 0 0 20px #9b4dca;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #9b4dca;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px #d27fff;
+        }
+
+        button:hover {
+            background-color: #d27fff;
+            box-shadow: 0 0 20px #d27fff, 0 0 30px #9b4dca;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            color: #d27fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            text-shadow: 0 0 5px #d27fff, 0 0 10px #9b4dca;
+        }
+
+        .cliente-card {
+            border: 1px solid #9b4dca;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            background-color: #2b0033;
+            box-shadow: 0 0 5px #9b4dca;
+            text-align: left;
+        }
+
+        .confirmacao {
+            background-color: rgba(50,0,70,0.9);
+            border: 2px solid #9b4dca;
+            box-shadow: 0 0 20px #9b4dca;
+            margin-bottom: 30px;
+            padding: 25px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 360px;
+            text-align: center;
+        }
+
+        /* Animação de estrelas piscando */
+        @keyframes pisca {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .container::before,
+        .confirmacao::before {
+            content: '';
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #d27fff;
+            border-radius: 50%;
+            animation: pisca 3s infinite;
+            pointer-events: none;
+        }
+
+        .container::before {
+            top: 15%;
+            left: 20%;
+        }
+
+        .confirmacao::before {
+            top: 25%;
+            right: 15%;
+        }
+    </style>
 </head>
 <body>
+
+    <!-- Mensagem de confirmação -->
+    <div class="confirmacao" id="confirmacao" style="display: none;">
+        <h1>Cadastro Concluído!</h1>
+        <p>Seu cadastro foi realizado com sucesso.</p>
+        <a href="#" id="voltarCadastro">Voltar ao Cadastro</a>
+    </div>
 
     <!-- Formulário de cadastro -->
     <div class="container">
@@ -31,19 +191,76 @@
         </form>
     </div>
 
-    <!-- Confirmação -->
-    <div class="confirmacao" id="confirmacao" style="display:none;">
-        <h1>Cadastro Concluído!</h1>
-        <p>Seu cadastro foi realizado com sucesso.</p>
-        <a href="#" id="voltarCadastro">Voltar ao Cadastro</a>
-    </div>
-
-    <!-- Lista de clientes -->
+    <!-- Lista de clientes cadastrados -->
     <div class="container">
         <h1>Clientes Cadastrados</h1>
         <div id="clientesList"></div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        const form = document.getElementById('cadastroForm');
+        const confirmacao = document.getElementById('confirmacao');
+        const clientesList = document.getElementById('clientesList');
+        const voltarCadastro = document.getElementById('voltarCadastro');
+
+        // Função para mostrar a lista de clientes
+        function mostrarClientes() {
+            clientesList.innerHTML = '';
+            const clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+
+            if (clientes.length === 0) {
+                clientesList.innerHTML = '<p style="color:#aaa; text-align:center;">Nenhum cliente cadastrado ainda.</p>';
+            } else {
+                clientes.forEach(cliente => {
+                    const card = document.createElement('div');
+                    card.classList.add('cliente-card');
+                    card.innerHTML = `
+                        <p><strong>Nome:</strong> ${cliente.nome}</p>
+                        <p><strong>Email:</strong> ${cliente.email}</p>
+                        <p><strong>Telefone:</strong> ${cliente.telefone}</p>
+                        <p><strong>Endereço:</strong> ${cliente.endereco}</p>
+                        <p><strong>Nascimento:</strong> ${cliente.dataNascimento}</p>
+                    `;
+                    clientesList.appendChild(card);
+                });
+            }
+        }
+
+        // Carrega a lista ao abrir a página
+        mostrarClientes();
+
+        // Evento de envio do formulário
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const novoCliente = {
+                nome: document.getElementById('nome').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                telefone: document.getElementById('telefone').value.trim(),
+                endereco: document.getElementById('endereco').value.trim(),
+                dataNascimento: document.getElementById('dataNascimento').value
+            };
+
+            let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+            clientes.push(novoCliente);
+            localStorage.setItem('clientes', JSON.stringify(clientes));
+
+            // Mostra confirmação e esconde formulário
+            form.style.display = 'none';
+            confirmacao.style.display = 'block';
+
+            // Atualiza lista
+            mostrarClientes();
+        });
+
+        // Voltar para o formulário
+        voltarCadastro.addEventListener('click', function(e) {
+            e.preventDefault();
+            confirmacao.style.display = 'none';
+            form.style.display = 'block';
+            form.reset();
+        });
+    </script>
+
 </body>
 </html>
