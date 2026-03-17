@@ -20,8 +20,9 @@
             align-items: center;
             min-height: 100vh;
             padding: 40px 20px;
-            background-image: radial-gradient(#9b4dca 1px, transparent 1px);
-            background-size: 20px 20px;
+            background-image: url('https://www.exemplo.com/imagem.jpg'); /* Aqui insira o link da imagem */
+            background-size: cover; /* Faz com que a imagem cubra toda a tela */
+            background-position: center center; /* Centraliza a imagem */
         }
 
         .container {
@@ -242,7 +243,7 @@
                     const clienteInfo = document.createElement('div');
                     clienteInfo.style.borderBottom = '1px solid #d27fff';
                     clienteInfo.style.padding = '8px 0';
-                    clienteInfo.innerHTML = `
+                    clienteInfo.innerHTML = ` 
                         <strong>#${index + 1} - ${cliente.nome}</strong><br>
                         E-mail: ${cliente.email}<br>
                         Telefone: ${cliente.telefone}<br>
